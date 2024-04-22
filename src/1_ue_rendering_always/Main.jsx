@@ -11,7 +11,7 @@ function UEOnAllRender() {
   console.log('render phase');
 
   useEffect(() => {
-    console.log('effect phase'); // effect applied AFTER the render phase
+    console.log('effect phase'); // effect applied AFTER every render phase
   });
 
   // 1 - provoc multiple rerender. What can you notice ? OK

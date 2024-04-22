@@ -1,4 +1,4 @@
-import Main from './1_ue_rendering_always/Main.jsx';
+import Main from './3_ue_rendering_with_dependencies/Main.jsx';
 
 function App() {
   return <Main />;

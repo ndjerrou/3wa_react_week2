@@ -1,20 +1,54 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
 // A react component that uses useEffect with an array of dependencies empty
 function UseEffectWithEmptyDeps() {
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = useState(0);
+  const [todos, setTodos] = useState([]);
+
+  console.log('render phase');
+
   useEffect(() => {
+    console.log('BEGIN effect');
     console.log('I am an effect...');
-  }, []);
 
-  // count is never used here, but it is used in the effect
-  // Exo : what happens if you remove the dependency array ?
+    document.title = 'Learning useEffect';
 
-  // Exo : what happens if you add another dependency ?
+    fetchTodos();
+    async function fetchTodos() {
+      const { data } = await axios(
+        'https://jsonplaceholder.typicode.com/todos/'
+      );
 
-  // Exo : what happens if you change the dependency array ?
+      console.log('updating a piece of state...');
+      setTodos(data);
+      console.log('END effect');
+    }
+  }, []); // effect applied AFTER the mouting of the component (only !)
 
-  // Exo : what happens if you remove the dependency array ?
+  // 1 - manipulate the counter and observe - ???
 
-  return <div>UseEffectWithEmptyDeps</div>;
+  // 2 - what happens if you remove the dependency array ?
+
+  // 3 -  make an http request inside the effect and update accordingly the DOM
+
+  return (
+    <div>
+      <h1>UEOnAllRender</h1>
+      <span>{count}</span>
+      <div>
+        <button onClick={() => setCount(count + 1)}>+1</button>
+        <button onClick={() => setCount(count - 1)}>-1</button>
+      </div>
+
+      <h2>My todos</h2>
+      <ul>
+        {todos.map(todo => (
+          <li key={todo.id}>{todo.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 export default UseEffectWithEmptyDeps;
